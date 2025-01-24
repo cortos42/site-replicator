@@ -9,19 +9,19 @@ export const Hero = () => {
       </div>
       
       <div className="container mx-auto px-4 relative text-white">
-        <div className="max-w-2xl animate-fade-up">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Transformez votre intérieur
+        <div className="max-w-3xl animate-fade-up">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+            Rénovez Votre Maison et Économisez Avec MaPrimeRénov' !
           </h1>
-          <p className="text-xl mb-8">
-            Des solutions de rénovation sur mesure pour créer l'espace de vos rêves
+          <p className="text-xl md:text-2xl mb-8 text-gray-100">
+            Rénov'&Moi : Votre Accompagnateur Expert Pour une Rénovation Réussie
           </p>
           <a 
             href="#contact"
             className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg 
-            transition-colors text-lg font-medium"
+            transition-colors text-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
-            Demander un devis
+            Obtenir Mon Évaluation Gratuite
           </a>
         </div>
       </div>
