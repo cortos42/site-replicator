@@ -1,31 +1,45 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed w-full bg-white/90 backdrop-blur-sm z-50 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 bg-white z-50 border-b">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-20">
-          <a href="/" className="text-2xl font-bold">
-            Renov<span className="text-primary">&</span>Moi
-          </a>
+        <div className="flex items-center justify-between h-16">
+          <Link to="/" className="text-xl font-bold">
+            Rénov'&Moi
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-8">
-            <a href="#why-choose-us" className="hover:text-primary transition-colors">Pourquoi nous choisir</a>
-            <a href="#eligible-works" className="hover:text-primary transition-colors">Travaux éligibles</a>
-            <a href="/ma-prime-renov" className="hover:text-primary transition-colors">MaPrimeRénov'</a>
-            <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
+            <a href="#why-choose-us" className="hover:text-primary transition-colors">
+              Pourquoi nous choisir
+            </a>
+            <Link to="/travaux-eligibles" className="hover:text-primary transition-colors">
+              Travaux éligibles
+            </Link>
+            <Link to="/ma-prime-renov" className="hover:text-primary transition-colors">
+              MaPrimeRénov'
+            </Link>
+            <a href="#contact" className="hover:text-primary transition-colors">
+              Contact
+            </a>
           </nav>
 
           {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden"
+          <button
+            className="md:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
@@ -33,10 +47,34 @@ export const Header = () => {
         {isMenuOpen && (
           <nav className="md:hidden py-4 animate-fade-up">
             <div className="flex flex-col gap-4">
-              <a href="#why-choose-us" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Pourquoi nous choisir</a>
-              <a href="#eligible-works" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Travaux éligibles</a>
-              <a href="/ma-prime-renov" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>MaPrimeRénov'</a>
-              <a href="#contact" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Contact</a>
+              <a
+                href="#why-choose-us"
+                className="hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Pourquoi nous choisir
+              </a>
+              <Link
+                to="/travaux-eligibles"
+                className="hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Travaux éligibles
+              </Link>
+              <Link
+                to="/ma-prime-renov"
+                className="hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                MaPrimeRénov'
+              </Link>
+              <a
+                href="#contact"
+                className="hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </a>
             </div>
           </nav>
         )}
