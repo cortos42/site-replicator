@@ -14,9 +14,9 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-8">
-            <a href="#services" className="hover:text-primary transition-colors">Services</a>
-            <a href="#about" className="hover:text-primary transition-colors">À propos</a>
-            <a href="#projects" className="hover:text-primary transition-colors">Projets</a>
+            <a href="#why-choose-us" className="hover:text-primary transition-colors">Pourquoi nous choisir</a>
+            <a href="#eligible-works" className="hover:text-primary transition-colors">Travaux éligibles</a>
+            <a href="/ma-prime-renov" className="hover:text-primary transition-colors">MaPrimeRénov'</a>
             <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
           </nav>
 
@@ -33,9 +33,9 @@ export const Header = () => {
         {isMenuOpen && (
           <nav className="md:hidden py-4 animate-fade-up">
             <div className="flex flex-col gap-4">
-              <a href="#services" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Services</a>
-              <a href="#about" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>À propos</a>
-              <a href="#projects" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Projets</a>
+              <a href="#why-choose-us" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Pourquoi nous choisir</a>
+              <a href="#eligible-works" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Travaux éligibles</a>
+              <a href="/ma-prime-renov" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>MaPrimeRénov'</a>
               <a href="#contact" className="hover:text-primary transition-colors" onClick={() => setIsMenuOpen(false)}>Contact</a>
             </div>
           </nav>
