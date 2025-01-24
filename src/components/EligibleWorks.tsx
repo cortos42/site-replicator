@@ -1,4 +1,4 @@
-import { Home, Thermometer, Wind, Window } from "lucide-react";
+import { Home, Thermometer, Wind, Windows } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 
 export const EligibleWorks = () => {
@@ -22,7 +22,7 @@ export const EligibleWorks = () => {
       link: "/ventilation"
     },
     {
-      icon: <Window className="w-8 h-8" />,
+      icon: <Windows className="w-8 h-8" />,
       title: "Menuiseries",
       description: "Fenêtres, portes, volets",
       link: "/menuiseries"
