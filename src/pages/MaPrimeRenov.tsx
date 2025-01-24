@@ -13,11 +13,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { CheckCircle, HelpCircle, Heart, Clock, Shield, Target, Euro } from "lucide-react";
+import { CheckCircle, HelpCircle, Heart, Clock, Shield, Target, Euro, Home, Calendar } from "lucide-react";
 
 const MaPrimeRenov = () => {
   const [primeAmount, setPrimeAmount] = useState(0);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [selectedHousing, setSelectedHousing] = useState<string | null>(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
 
   const calculatePrime = () => {
     setIsCalculating(true);
@@ -135,6 +137,116 @@ const MaPrimeRenov = () => {
               Estimation de votre prime : {primeAmount}€
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Section Simulateur */}
+      <section className="py-12 bg-secondary/30">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Colonne de gauche - Simulateur */}
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold">Simulez vos aides MaPrimeRénov'</h2>
+              <p className="text-muted-foreground">
+                Découvrez en quelques clics le montant de vos aides pour vos travaux de rénovation énergétique.
+              </p>
+              
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold mb-3">Type de logement</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <Button
+                      variant={selectedHousing === 'house' ? 'default' : 'outline'}
+                      className="w-full"
+                      onClick={() => setSelectedHousing('house')}
+                    >
+                      <Home className="mr-2" />
+                      Maison
+                    </Button>
+                    <Button
+                      variant={selectedHousing === 'apartment' ? 'default' : 'outline'}
+                      className="w-full"
+                      onClick={() => setSelectedHousing('apartment')}
+                    >
+                      <Home className="mr-2" />
+                      Appartement
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-3">Période de construction</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <Button
+                      variant={selectedPeriod === 'before2009' ? 'default' : 'outline'}
+                      className="w-full"
+                      onClick={() => setSelectedPeriod('before2009')}
+                    >
+                      <Calendar className="mr-2" />
+                      Avant 2009
+                    </Button>
+                    <Button
+                      variant={selectedPeriod === 'after2009' ? 'default' : 'outline'}
+                      className="w-full"
+                      onClick={() => setSelectedPeriod('after2009')}
+                    >
+                      <Calendar className="mr-2" />
+                      Après 2009
+                    </Button>
+                  </div>
+                </div>
+
+                <Button 
+                  className="w-full mt-6"
+                  onClick={calculatePrime}
+                  disabled={!selectedHousing || !selectedPeriod || isCalculating}
+                >
+                  {isCalculating ? "Calcul en cours..." : "Calculer mon aide"}
+                </Button>
+
+                {primeAmount > 0 && (
+                  <div className="p-4 bg-primary/10 rounded-lg text-center animate-fade-up">
+                    <p className="text-lg">Estimation de votre prime :</p>
+                    <p className="text-3xl font-bold text-primary">{primeAmount}€</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Colonne de droite - Avantages */}
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold">Les avantages MaPrimeRénov'</h2>
+              <div className="grid gap-4">
+                <Card>
+                  <CardContent className="p-6 flex items-start gap-4">
+                    <Euro className="w-8 h-8 text-primary" />
+                    <div>
+                      <h3 className="font-semibold mb-2">Jusqu'à 20 000€ d'aide</h3>
+                      <p className="text-muted-foreground">Bénéficiez d'une aide financière importante pour vos travaux de rénovation énergétique.</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-6 flex items-start gap-4">
+                    <CheckCircle className="w-8 h-8 text-primary" />
+                    <div>
+                      <h3 className="font-semibold mb-2">Cumulable avec d'autres aides</h3>
+                      <p className="text-muted-foreground">MaPrimeRénov' est cumulable avec les CEE et d'autres aides locales.</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-6 flex items-start gap-4">
+                    <Clock className="w-8 h-8 text-primary" />
+                    <div>
+                      <h3 className="font-semibold mb-2">Versement rapide</h3>
+                      <p className="text-muted-foreground">Recevez votre prime rapidement après la fin des travaux.</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
