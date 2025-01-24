@@ -15,14 +15,14 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-8">
-            <a href="#why-choose-us" className="hover:text-primary transition-colors">
-              Pourquoi nous choisir
-            </a>
             <Link to="/travaux-eligibles" className="hover:text-primary transition-colors">
               Travaux éligibles
             </Link>
             <Link to="/ma-prime-renov" className="hover:text-primary transition-colors">
               MaPrimeRénov'
+            </Link>
+            <Link to="/blog" className="hover:text-primary transition-colors">
+              Blog
             </Link>
             <a href="#contact" className="hover:text-primary transition-colors">
               Contact
@@ -47,13 +47,6 @@ export const Header = () => {
         {isMenuOpen && (
           <nav className="md:hidden py-4 animate-fade-up">
             <div className="flex flex-col gap-4">
-              <a
-                href="#why-choose-us"
-                className="hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Pourquoi nous choisir
-              </a>
               <Link
                 to="/travaux-eligibles"
                 className="hover:text-primary transition-colors"
@@ -67,6 +60,13 @@ export const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 MaPrimeRénov'
+              </Link>
+              <Link
+                to="/blog"
+                className="hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
               </Link>
               <a
                 href="#contact"
