@@ -2,7 +2,7 @@ import {
   Layers, 
   Thermometer, 
   Wind, 
-  Window,
+  Square, 
   ArrowRight,
   Percent,
   DollarSign,
@@ -195,7 +195,7 @@ const workSections = [
   },
   {
     id: "menuiseries",
-    icon: <Window className="w-12 h-12 text-primary" />,
+    icon: <Square className="w-12 h-12 text-primary" />,
     title: "Menuiseries",
     description: "Fenêtres et portes-fenêtres performantes",
     details: [
