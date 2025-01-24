@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Home } from "lucide-react";
+import { Home, Building } from "lucide-react";
 
 const MaPrimeRenov = () => {
   const [selectedHousing, setSelectedHousing] = useState<string | null>(null);
@@ -20,65 +20,6 @@ const MaPrimeRenov = () => {
       title: "100% Gratuit",
       description: "Sans engagement de votre part"
     }
-  ];
-
-  return (
-    <div className="min-h-screen bg-[#1E1B3B] text-white">
-      <div className="container mx-auto px-4 py-12 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left Column - Title and Benefits */}
-        <div className="space-y-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            Obtenez MaPrimeRénov' pour vos travaux
-          </h1>
-
-          <div className="grid gap-6">
-            {benefits.map((benefit, index) => (
-              <div
-                key={index}
-                className="bg-[#2A2751] p-6 rounded-lg space-y-2"
-              >
-                <h3 className="text-xl font-semibold">{benefit.title}</h3>
-                <p className="text-gray-300">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right Column - Simulator */}
-        <div className="bg-white rounded-2xl p-8 text-black">
-          <div className="space-y-8">
-            <h2 className="text-2xl font-bold">
-              J'esJe vais restructurer la page MaPrimeRenov pour qu'elle corresponde exactement à la capture d'écran, avec un design plus épuré comportant :
-- Un titre principal "Obtenez MaPrimeRénov' pour vos travaux"
-- 3 cartes d'avantages à gauche
-- Un simulateur à droite dans une carte blanche
-
-<lov-code>
-Let's refactor the MaPrimeRenov page to match the new design:
-
-<lov-write file_path="src/pages/MaPrimeRenov.tsx">
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Home, Building } from "lucide-react";
-
-const MaPrimeRenov = () => {
-  const [selectedHousing, setSelectedHousing] = useState<string | null>(null);
-  const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
-
-  const benefits = [
-    {
-      title: "Simulation en ligne",
-      description: "Estimez vos aides en quelques clics",
-    },
-    {
-      title: "Résultat immédiat",
-      description: "Obtenez une réponse instantanée",
-    },
-    {
-      title: "100% Gratuit",
-      description: "Sans engagement de votre part",
-    },
   ];
 
   return (
