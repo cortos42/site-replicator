@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -6,9 +7,57 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { CheckCircle, HelpCircle, Heart, Clock, Shield, Target } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { CheckCircle, HelpCircle, Heart, Clock, Shield, Target, Euro } from "lucide-react";
 
 const MaPrimeRenov = () => {
+  const [primeAmount, setPrimeAmount] = useState(0);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const calculatePrime = () => {
+    setIsCalculating(true);
+    // Simulation d'un calcul
+    const randomAmount = Math.floor(Math.random() * 15000) + 5000;
+    setTimeout(() => {
+      setPrimeAmount(randomAmount);
+      setIsCalculating(false);
+    }, 1000);
+  };
+
+  const stats = [
+    { value: "15000€", label: "Prime moyenne" },
+    { value: "80%", label: "Taux de satisfaction" },
+    { value: "30%", label: "Économies d'énergie" },
+  ];
+
+  const timelineSteps = [
+    {
+      title: "Évaluation initiale",
+      description: "Analyse de votre situation et de vos besoins",
+      icon: <CheckCircle className="w-6 h-6" />,
+    },
+    {
+      title: "Devis et simulation",
+      description: "Estimation des coûts et des aides",
+      icon: <Euro className="w-6 h-6" />,
+    },
+    {
+      title: "Montage du dossier",
+      description: "Préparation et soumission de votre demande",
+      icon: <Clock className="w-6 h-6" />,
+    },
+    {
+      title: "Réalisation des travaux",
+      description: "Suivi et accompagnement pendant les travaux",
+      icon: <Target className="w-6 h-6" />,
+    },
+  ];
+
   const faqItems = [
     {
       question: "Qui peut bénéficier de MaPrimeRénov' ?",
@@ -57,135 +106,138 @@ const MaPrimeRenov = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-12">
-      {/* Section 1: MaPrimeRénov' Guide */}
-      <section className="space-y-6">
-        <div className="text-center max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-4">MaPrimeRénov' : Guide Complet</h1>
-          <p className="text-lg text-muted-foreground">
-            MaPrimeRénov' est l'aide principale de l'État pour la rénovation énergétique. 
-            Découvrez comment ce dispositif peut vous aider à financer vos travaux et améliorer 
-            le confort de votre logement.
-          </p>
+      {/* Hero Section avec animation fade-in */}
+      <section className="relative h-[60vh] flex items-center animate-fade-up">
+        <div 
+          className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1487958449943-2429e8be8625')] 
+          bg-cover bg-center"
+        >
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Conditions d'Éligibilité</CardTitle>
-            <CardDescription>Les critères essentiels pour bénéficier de l'aide</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-primary mt-1" />
-              <div>
-                <h3 className="font-medium">Propriétaires éligibles</h3>
-                <p className="text-muted-foreground">Propriétaires occupants, bailleurs et copropriétés</p>
-              </div>
+        
+        <div className="relative text-white max-w-3xl mx-auto text-center space-y-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            Simplifiez Votre Rénovation Énergétique
+          </h1>
+          <p className="text-xl md:text-2xl">
+            Découvrez MaPrimeRénov' et maximisez vos aides financières
+          </p>
+          <Button 
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-white animate-pulse"
+            onClick={calculatePrime}
+          >
+            {isCalculating ? "Calcul en cours..." : "Simuler mon aide"}
+          </Button>
+          
+          {primeAmount > 0 && (
+            <div className="mt-8 text-3xl font-bold animate-fade-up">
+              Estimation de votre prime : {primeAmount}€
             </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-primary mt-1" />
-              <div>
-                <h3 className="font-medium">Logements concernés</h3>
-                <p className="text-muted-foreground">Résidences principales construites depuis plus de 15 ans</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-primary mt-1" />
-              <div>
-                <h3 className="font-medium">Conditions de ressources</h3>
-                <p className="text-muted-foreground">Montant de l'aide calculé selon les revenus du foyer</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold">Questions Fréquentes</h2>
-          <Accordion type="single" collapsible className="w-full">
-            {faqItems.map((item, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-left">
-                  <div className="flex items-center gap-2">
-                    <HelpCircle className="w-5 h-5 text-primary" />
-                    {item.question}
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  {item.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          )}
         </div>
       </section>
 
-      {/* Section 2: Notre Expertise */}
+      {/* Section Statistiques avec compteurs animés */}
+      <section className="grid md:grid-cols-3 gap-8">
+        {stats.map((stat, index) => (
+          <Card key={index} className="text-center transform hover:scale-105 transition-transform duration-300">
+            <CardHeader>
+              <CardTitle className="text-4xl font-bold text-primary">
+                {stat.value}
+              </CardTitle>
+              <CardDescription className="text-lg">
+                {stat.label}
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        ))}
+      </section>
+
+      {/* Timeline interactive */}
       <section className="space-y-8">
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-4">Notre Expertise à Votre Service</h2>
-          <p className="text-lg text-muted-foreground">
-            Nous vous accompagnons à chaque étape de votre projet de rénovation énergétique, 
-            de l'évaluation initiale jusqu'à l'obtention de vos aides.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {values.map((value, index) => (
-            <Card key={index} className="text-center">
-              <CardHeader>
-                <div className="mx-auto mb-4">{value.icon}</div>
-                <CardTitle className="text-xl">{value.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">{value.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Notre Processus d'Accompagnement</CardTitle>
-            <CardDescription>Un parcours simplifié en 4 étapes</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">1</div>
-                <div>
-                  <h3 className="font-medium">Évaluation Initiale</h3>
-                  <p className="text-muted-foreground">Analyse de votre situation et de vos besoins en rénovation</p>
-                </div>
+        <h2 className="text-3xl font-bold text-center">Notre Processus</h2>
+        <div className="relative">
+          {timelineSteps.map((step, index) => (
+            <div 
+              key={index}
+              className="flex items-start gap-4 mb-8 opacity-0 animate-fade-up"
+              style={{ animationDelay: `${index * 200}ms` }}
+            >
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center">
+                {step.icon}
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">2</div>
-                <div>
-                  <h3 className="font-medium">Plan Personnalisé</h3>
-                  <p className="text-muted-foreground">Définition des travaux et optimisation des aides financières</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">3</div>
-                <div>
-                  <h3 className="font-medium">Montage du Dossier</h3>
-                  <p className="text-muted-foreground">Préparation et soumission de votre dossier MaPrimeRénov'</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">4</div>
-                <div>
-                  <h3 className="font-medium">Suivi et Validation</h3>
-                  <p className="text-muted-foreground">Accompagnement jusqu'au versement de votre prime</p>
-                </div>
+              <div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <h3 className="text-xl font-semibold hover:text-primary transition-colors">
+                        {step.title}
+                      </h3>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{step.description}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <p className="text-muted-foreground">{step.description}</p>
               </div>
             </div>
+          ))}
+          <div className="absolute left-6 top-0 bottom-0 w-px bg-primary/20"></div>
+        </div>
+      </section>
+
+      {/* FAQ Section avec animations */}
+      <section className="space-y-6 max-w-3xl mx-auto">
+        <h2 className="text-3xl font-bold text-center">Questions Fréquentes</h2>
+        <Accordion type="single" collapsible className="w-full">
+          {faqItems.map((item, index) => (
+            <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionTrigger className="text-left">
+                <div className="flex items-center gap-2">
+                  <HelpCircle className="w-5 h-5 text-primary" />
+                  {item.question}
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">
+                {item.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </section>
+
+      {/* Section Avantages avec hover effects */}
+      <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {values.map((value, index) => (
+          <Card key={index} className="text-center">
+            <CardHeader>
+              <div className="mx-auto mb-4">{value.icon}</div>
+              <CardTitle className="text-xl">{value.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">{value.description}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </section>
+
+      {/* CTA Final */}
+      <section className="text-center py-12">
+        <Card className="max-w-2xl mx-auto transform hover:scale-105 transition-transform duration-300">
+          <CardHeader>
+            <CardTitle>Prêt à commencer votre projet ?</CardTitle>
+            <CardDescription>
+              Nos experts sont là pour vous accompagner à chaque étape
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white">
+              Contactez-nous
+            </Button>
           </CardContent>
         </Card>
-
-        <div className="text-center py-8">
-          <Button size="lg" className="animate-fade-up">
-            Simuler Mes Aides
-          </Button>
-        </div>
       </section>
     </div>
   );
