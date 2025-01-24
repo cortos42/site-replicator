@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Home, Building } from "lucide-react";
+import { Home, Building2, Calculator, Check, Euro, Clock, Target } from "lucide-react";
 
 const MaPrimeRenov = () => {
-  const [selectedHousing, setSelectedHousing] = useState<string | null>(null);
-  const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
+  const [selectedHousing, setSelectedHousing] = useState<"house" | "apartment" | null>(null);
+  const [constructionPeriod, setConstructionPeriod] = useState<"less2" | "2to15" | "more15" | null>(null);
 
-  const benefits = [
+  const features = [
     {
       title: "Simulation en ligne",
       description: "Estimez vos aides en quelques clics"
@@ -22,77 +22,98 @@ const MaPrimeRenov = () => {
     }
   ];
 
-  return (
-    <div className="min-h-screen bg-[#1e1b4b] text-white">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
-          {/* Left Column */}
-          <div className="space-y-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Obtenez MaPrimeRénov' pour vos travaux
-            </h1>
-            
-            <div className="grid gap-4">
-              {benefits.map((benefit, index) => (
-                <Card key={index} className="p-6 bg-[#2a2668]/50 border-0">
-                  <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-                  <p className="text-gray-300">{benefit.description}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
+  const benefits = [
+    {
+      icon: <Calculator className="w-6 h-6 text-primary" />,
+      text: "Calculez gratuitement le montant de vos aides. Le résultat est immédiat"
+    },
+    {
+      icon: <Euro className="w-6 h-6 text-primary" />,
+      text: "Cumulez les aides MaPrimeRénov' avec la Prime Effy"
+    },
+    {
+      icon: <Target className="w-6 h-6 text-primary" />,
+      text: "Jusqu'à 80% du montant des travaux financés grâce aux aides"
+    }
+  ];
 
-          {/* Right Column - Simulator */}
-          <Card className="p-8 bg-white text-black">
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold">
+  const stats = [
+    { value: "4 300", label: "artisans RGE en France, avec à l'APP" },
+    { value: "+100 000", label: "familles accompagnées chaque année" },
+    { value: "16 ans", label: "d'expérience en rénovation énergétique" },
+    { value: "Équipe dédiée", label: "et un suivi personnalisé de votre dossier de A à Z" }
+  ];
+
+  return (
+    <div className="space-y-16 py-8">
+      {/* Hero Section */}
+      <section className="relative bg-navy-900 text-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-6 animate-fade-up">
+              <h1 className="text-4xl md:text-5xl font-bold">
+                Obtenez MaPrimeRénov' pour vos travaux
+              </h1>
+              <div className="grid grid-cols-3 gap-4">
+                {features.map((feature, index) => (
+                  <div 
+                    key={index}
+                    className="p-4 rounded-lg bg-white/10 backdrop-blur-sm animate-scale-up"
+                    style={{ animationDelay: `${index * 200}ms` }}
+                  >
+                    <h3 className="font-semibold text-lg">{feature.title}</h3>
+                    <p className="text-sm text-gray-300">{feature.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Simulateur */}
+            <Card className="p-6 bg-white text-gray-900 animate-slide-in">
+              <h2 className="text-2xl font-bold mb-6">
                 J'estime mes aides et mon devis en 2 min
               </h2>
-
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div>
-                  <p className="text-lg mb-4">Vos travaux concernent :</p>
+                  <p className="mb-3 font-medium">Vos travaux concernent :</p>
                   <div className="grid grid-cols-2 gap-4">
                     <Button
-                      variant={selectedHousing === 'house' ? 'default' : 'outline'}
-                      className="w-full h-32 flex flex-col gap-2"
-                      onClick={() => setSelectedHousing('house')}
+                      variant={selectedHousing === "house" ? "default" : "outline"}
+                      className="h-24 flex-col gap-2"
+                      onClick={() => setSelectedHousing("house")}
                     >
                       <Home className="w-8 h-8" />
-                      <span>Une maison</span>
+                      Une maison
                     </Button>
                     <Button
-                      variant={selectedHousing === 'apartment' ? 'default' : 'outline'}
-                      className="w-full h-32 flex flex-col gap-2"
-                      onClick={() => setSelectedHousing('apartment')}
+                      variant={selectedHousing === "apartment" ? "default" : "outline"}
+                      className="h-24 flex-col gap-2"
+                      onClick={() => setSelectedHousing("apartment")}
                     >
-                      <Building className="w-8 h-8" />
-                      <span>Un appartement</span>
+                      <Building2 className="w-8 h-8" />
+                      Un appartement
                     </Button>
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-lg mb-4">Votre logement a été construit :</p>
+                  <p className="mb-3 font-medium">Votre logement a été construit :</p>
                   <div className="grid grid-cols-3 gap-4">
                     <Button
-                      variant={selectedPeriod === 'less2' ? 'default' : 'outline'}
-                      className="w-full"
-                      onClick={() => setSelectedPeriod('less2')}
+                      variant={constructionPeriod === "less2" ? "default" : "outline"}
+                      onClick={() => setConstructionPeriod("less2")}
                     >
                       - de 2 ans
                     </Button>
                     <Button
-                      variant={selectedPeriod === '2to15' ? 'default' : 'outline'}
-                      className="w-full"
-                      onClick={() => setSelectedPeriod('2to15')}
+                      variant={constructionPeriod === "2to15" ? "default" : "outline"}
+                      onClick={() => setConstructionPeriod("2to15")}
                     >
                       Entre 2 et 15 ans
                     </Button>
                     <Button
-                      variant={selectedPeriod === 'more15' ? 'default' : 'outline'}
-                      className="w-full"
-                      onClick={() => setSelectedPeriod('more15')}
+                      variant={constructionPeriod === "more15" ? "default" : "outline"}
+                      onClick={() => setConstructionPeriod("more15")}
                     >
                       + de 15 ans
                     </Button>
@@ -100,16 +121,65 @@ const MaPrimeRenov = () => {
                 </div>
 
                 <Button 
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-lg py-6"
-                  disabled={!selectedHousing || !selectedPeriod}
+                  className="w-full text-lg py-6 animate-pulse"
+                  disabled={!selectedHousing || !constructionPeriod}
                 >
                   Je calcule mes aides
                 </Button>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto space-y-8">
+          {benefits.map((benefit, index) => (
+            <div 
+              key={index}
+              className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors animate-fade-up"
+              style={{ animationDelay: `${index * 200}ms` }}
+            >
+              {benefit.icon}
+              <p className="text-lg">{benefit.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Pourquoi faire confiance à Rénov'&Moi ?
+          </h2>
+          <div className="grid md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div 
+                key={index}
+                className="text-center space-y-2 animate-scale-up"
+                style={{ animationDelay: `${index * 200}ms` }}
+              >
+                <div className="text-2xl font-bold text-primary">{stat.value}</div>
+                <p className="text-gray-600">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="container mx-auto px-4 text-center">
+        <Card className="max-w-2xl mx-auto p-8 space-y-6">
+          <h2 className="text-2xl font-bold">
+            Demandez votre devis gratuit pour votre projet de rénovation énergétique
+          </h2>
+          <Button size="lg" className="animate-pulse">
+            Je demande mon devis gratuit
+          </Button>
+        </Card>
+      </section>
     </div>
   );
 };
