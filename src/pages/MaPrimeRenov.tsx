@@ -22,8 +22,8 @@ const MaPrimeRenov = () => {
       description: "Estimez vos aides en quelques clics"
     },
     {
-      title: "Résultat immédiat",
-      description: "Obtenez une réponse instantanée"
+      title: "conseil d'expert",
+      description: "Obtenez une réponse personnalisé"
     },
     {
       title: "100% Gratuit",
@@ -38,11 +38,11 @@ const MaPrimeRenov = () => {
     },
     {
       icon: <Euro className="w-6 h-6 text-primary" />,
-      text: "Cumulez les aides MaPrimeRénov' avec la Prime Effy"
+      text: "Obtenuer jusquà 65 000€"
     },
     {
       icon: <Target className="w-6 h-6 text-primary" />,
-      text: "Jusqu'à 80% du montant des travaux financés grâce aux aides"
+      text: "Accompagnement personnalisé"
     }
   ];
 
