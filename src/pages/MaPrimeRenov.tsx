@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import { Home, Building2, Calculator, Check, Euro, Clock, Target } from "lucide-react";
 
 const MaPrimeRenov = () => {
   const [selectedHousing, setSelectedHousing] = useState<"house" | "apartment" | null>(null);
   const [constructionPeriod, setConstructionPeriod] = useState<"less2" | "2to15" | "more15" | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const features = [
     {
@@ -43,6 +50,96 @@ const MaPrimeRenov = () => {
     { value: "16 ans", label: "d'expérience en rénovation énergétique" },
     { value: "Équipe dédiée", label: "et un suivi personnalisé de votre dossier de A à Z" }
   ];
+
+  const handleNext = () => {
+    if (currentStep < 6) {
+      setCurrentStep(prev => prev + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentStep > 1) {
+      setCurrentStep(prev => prev - 1);
+    }
+  };
+
+  const QuestionnaireContent = () => {
+    const questions = [
+      // Questions 1-2
+      <div key="1-2" className="space-y-8">
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">1. Votre projet concerne :</h3>
+          <RadioGroup className="grid gap-4">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="maison" id="maison" />
+              <Label htmlFor="maison">Une maison</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="appartement" id="appartement" />
+              <Label htmlFor="appartement">Un appartement</Label>
+            </div>
+          </RadioGroup>
+        </div>
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">2. La construction de ce logement date de :</h3>
+          <RadioGroup className="grid gap-4">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="moins2" id="moins2" />
+              <Label htmlFor="moins2">Moins de 2 ans</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="2a15" id="2a15" />
+              <Label htmlFor="2a15">Entre 2 ans et 15 ans</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="plus15" id="plus15" />
+              <Label htmlFor="plus15">Plus de 15 ans</Label>
+            </div>
+          </RadioGroup>
+        </div>
+      </div>,
+      // Questions 3-4
+      <div key="3-4" className="space-y-8">
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">3. Quelle est la surface habitable approximative de votre logement (en m²) ?</h3>
+          <Input type="number" placeholder="Surface à préciser" />
+        </div>
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">4. Aujourd'hui, quel est le mode de chauffage principal pour ce logement ?</h3>
+          <RadioGroup className="grid gap-4">
+            {["Chauffage au fioul", "Chauffage électrique", "Chauffage au gaz", 
+              "Chauffage au bois", "Pompe à chaleur", "Chauffage au charbon"].map((type) => (
+              <div key={type} className="flex items-center space-x-2">
+                <RadioGroupItem value={type} id={type} />
+                <Label htmlFor={type}>{type}</Label>
+              </div>
+            ))}
+          </RadioGroup>
+        </div>
+      </div>,
+      // ... Continue with other question pairs in the same format
+    ];
+
+    return (
+      <div className="relative">
+        <ScrollArea className="h-[60vh] pr-4">
+          {questions[Math.floor((currentStep - 1) / 2)]}
+        </ScrollArea>
+        <div className="flex justify-between mt-4 pt-4 border-t">
+          <Button
+            variant="outline"
+            onClick={handlePrevious}
+            disabled={currentStep === 1}
+          >
+            Précédent
+          </Button>
+          <Button onClick={handleNext} disabled={currentStep === questions.length * 2}>
+            {currentStep === questions.length * 2 ? "Terminer" : "Suivant"}
+          </Button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-16 py-8">
@@ -123,6 +220,7 @@ const MaPrimeRenov = () => {
                 <Button 
                   className="w-full text-lg py-6 animate-pulse"
                   disabled={!selectedHousing || !constructionPeriod}
+                  onClick={() => setIsDialogOpen(true)}
                 >
                   Je calcule mes aides
                 </Button>
@@ -180,6 +278,13 @@ const MaPrimeRenov = () => {
           </Button>
         </Card>
       </section>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <h2 className="text-2xl font-bold mb-6">Questionnaire d'éligibilité</h2>
+          <QuestionnaireContent />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
