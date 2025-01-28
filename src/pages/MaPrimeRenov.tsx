@@ -7,7 +7,25 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Home, Building2, Calculator, Check, Euro, Clock, Target } from "lucide-react";
+import { 
+  Home, 
+  Building2, 
+  Calculator, 
+  Check, 
+  Euro, 
+  Clock, 
+  Target, 
+  Calendar,
+  MapPin,
+  Users,
+  Wallet,
+  Phone,
+  Mail,
+  Ruler,
+  Flame,
+  Wrench,
+  Shield
+} from "lucide-react";
 
 const MaPrimeRenov = () => {
   const [selectedHousing, setSelectedHousing] = useState<"house" | "apartment" | null>(null);
@@ -48,7 +66,10 @@ const MaPrimeRenov = () => {
       // Questions 1-2
       <div key="1-2" className="space-y-8">
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">1. Votre projet concerne :</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Home className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">1. Votre projet concerne :</h3>
+          </div>
           <RadioGroup 
             value={formData.housingType}
             onValueChange={(value) => setFormData({...formData, housingType: value})}
@@ -65,7 +86,10 @@ const MaPrimeRenov = () => {
           </RadioGroup>
         </div>
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">2. La construction de ce logement date de :</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Calendar className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">2. La construction de ce logement date de :</h3>
+          </div>
           <RadioGroup 
             value={formData.constructionDate}
             onValueChange={(value) => setFormData({...formData, constructionDate: value})}
@@ -90,7 +114,10 @@ const MaPrimeRenov = () => {
       // Questions 3-4
       <div key="3-4" className="space-y-8">
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">3. Quelle est la surface habitable approximative de votre logement (en m²) ?</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Ruler className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">3. Quelle est la surface habitable approximative de votre logement (en m²) ?</h3>
+          </div>
           <Input 
             type="number" 
             placeholder="Surface à préciser"
@@ -99,7 +126,10 @@ const MaPrimeRenov = () => {
           />
         </div>
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">4. Aujourd'hui, quel est le mode de chauffage principal pour ce logement ?</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Flame className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">4. Aujourd'hui, quel est le mode de chauffage principal pour ce logement ?</h3>
+          </div>
           <RadioGroup 
             value={formData.heatingType}
             onValueChange={(value) => setFormData({...formData, heatingType: value})}
@@ -125,7 +155,10 @@ const MaPrimeRenov = () => {
       // Questions 5-6
       <div key="5-6" className="space-y-8">
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">5. Quels travaux envisagez-vous de réaliser ?</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Wrench className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">5. Quels travaux envisagez-vous de réaliser ?</h3>
+          </div>
           <div className="grid gap-4">
             {[
               "Rénovation globale",
@@ -152,7 +185,10 @@ const MaPrimeRenov = () => {
           </div>
         </div>
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">6. Quels types d'isolation souhaitez-vous effectuer ?</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Shield className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">6. Quels types d'isolation souhaitez-vous effectuer ?</h3>
+          </div>
           <div className="grid gap-4">
             {[
               "Isolation des combles",
@@ -184,7 +220,10 @@ const MaPrimeRenov = () => {
       // Questions 7-8
       <div key="7-8" className="space-y-8">
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">7. Quand souhaitez-vous démarrer vos travaux ?</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Clock className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">7. Quand souhaitez-vous démarrer vos travaux ?</h3>
+          </div>
           <RadioGroup 
             value={formData.startDate}
             onValueChange={(value) => setFormData({...formData, startDate: value})}
@@ -201,7 +240,10 @@ const MaPrimeRenov = () => {
           </RadioGroup>
         </div>
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">8. Où se situe votre logement ?</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <MapPin className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">8. Où se situe votre logement ?</h3>
+          </div>
           <div className="grid gap-4">
             <Input 
               placeholder="Code postal"
@@ -226,7 +268,10 @@ const MaPrimeRenov = () => {
       // Questions 9-10
       <div key="9-10" className="space-y-8">
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">9. Dans ce logement, vous êtes :</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Users className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">9. Dans ce logement, vous êtes :</h3>
+          </div>
           <RadioGroup 
             value={formData.ownershipStatus}
             onValueChange={(value) => setFormData({...formData, ownershipStatus: value})}
@@ -246,7 +291,10 @@ const MaPrimeRenov = () => {
           </RadioGroup>
         </div>
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">10. Combien de personnes composent votre foyer, y compris vous-même ?</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Users className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">10. Combien de personnes composent votre foyer, y compris vous-même ?</h3>
+          </div>
           <Input 
             type="number"
             placeholder="Nombre de personnes"
@@ -259,7 +307,10 @@ const MaPrimeRenov = () => {
       // Questions 11-12
       <div key="11-12" className="space-y-8">
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">11. Quel est le revenu fiscal annuel approximatif de votre foyer ?</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Wallet className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">11. Quel est le revenu fiscal annuel approximatif de votre foyer ?</h3>
+          </div>
           <RadioGroup 
             value={formData.income}
             onValueChange={(value) => setFormData({...formData, income: value})}
@@ -279,26 +330,35 @@ const MaPrimeRenov = () => {
           </RadioGroup>
         </div>
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">12. Coordonnées</h3>
+          <div className="flex items-center gap-4 mb-4">
+            <Mail className="w-8 h-8 text-primary" />
+            <h3 className="text-lg font-semibold">12. Coordonnées</h3>
+          </div>
           <div className="grid gap-4">
-            <Input 
-              type="tel"
-              placeholder="Numéro de téléphone"
-              value={formData.contact.phone}
-              onChange={(e) => setFormData({
-                ...formData,
-                contact: { ...formData.contact, phone: e.target.value }
-              })}
-            />
-            <Input 
-              type="email"
-              placeholder="Email"
-              value={formData.contact.email}
-              onChange={(e) => setFormData({
-                ...formData,
-                contact: { ...formData.contact, email: e.target.value }
-              })}
-            />
+            <div className="flex items-center gap-2">
+              <Phone className="w-5 h-5 text-muted-foreground" />
+              <Input 
+                type="tel"
+                placeholder="Numéro de téléphone"
+                value={formData.contact.phone}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  contact: { ...formData.contact, phone: e.target.value }
+                })}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Mail className="w-5 h-5 text-muted-foreground" />
+              <Input 
+                type="email"
+                placeholder="Email"
+                value={formData.contact.email}
+                onChange={(e) => setFormData({
+                  ...formData,
+                  contact: { ...formData.contact, email: e.target.value }
+                })}
+              />
+            </div>
           </div>
         </div>
       </div>
