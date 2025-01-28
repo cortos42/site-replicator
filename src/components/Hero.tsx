@@ -1,4 +1,10 @@
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useState } from "react";
+import { MaPrimeRenovForm } from "./MaPrimeRenovForm";
+
 export const Hero = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   return (
     <section className="relative h-screen flex items-center">
       <div 
@@ -16,15 +22,21 @@ export const Hero = () => {
           <p className="text-xl md:text-2xl mb-8 text-gray-100">
             Rénov'&Moi : Votre Accompagnateur Expert Pour une Rénovation Réussie
           </p>
-          <a 
-            href="#contact"
+          <button 
+            onClick={() => setIsDialogOpen(true)}
             className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg 
             transition-colors text-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             Obtenir Mon Évaluation Gratuite
-          </a>
+          </button>
         </div>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <MaPrimeRenovForm />
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
