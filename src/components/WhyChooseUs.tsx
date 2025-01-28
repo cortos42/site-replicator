@@ -47,7 +47,7 @@ export const WhyChooseUs = () => {
         <Card className="bg-primary/5 border-primary/20">
           <CardContent className="p-6">
             <h3 className="text-2xl font-semibold mb-4 text-center text-primary">
-              MaPrimeRénov' : Jusqu'à 20 000€ d'aide
+              MaPrimeRénov' : Jusqu'à 65 000€ d'aide
             </h3>
             <p className="text-center text-gray-700">
               Bénéficiez d'une aide financière importante pour vos travaux de rénovation énergétique.
