@@ -34,7 +34,7 @@ export const Hero = () => {
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <MaPrimeRenovForm />
+          <MaPrimeRenovForm onClose={() => setIsDialogOpen(false)} />
         </DialogContent>
       </Dialog>
     </section>
