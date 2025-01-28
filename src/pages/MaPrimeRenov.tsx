@@ -1,11 +1,35 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Home, Building2, Calculator, Check, Euro, Clock, Target } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Home, Building2, Calculator, Euro, Clock, Target } from "lucide-react";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
 
 const MaPrimeRenov = () => {
   const [selectedHousing, setSelectedHousing] = useState<"house" | "apartment" | null>(null);
   const [constructionPeriod, setConstructionPeriod] = useState<"less2" | "2to15" | "more15" | null>(null);
+
+  const form = useForm({
+    defaultValues: {
+      housingType: "",
+      constructionDate: "",
+      surface: "",
+      heatingType: "",
+      plannedWorks: [],
+      insulationType: [],
+      startDate: "",
+      postalCode: "",
+      city: "",
+      ownershipStatus: "",
+      householdSize: "",
+      income: "",
+      phone: "",
+      email: "",
+    },
+  });
 
   const features = [
     {
@@ -37,16 +61,8 @@ const MaPrimeRenov = () => {
     }
   ];
 
-  const stats = [
-    { value: "4 300", label: "artisans RGE en France, avec à l'APP" },
-    { value: "+100 000", label: "familles accompagnées chaque année" },
-    { value: "16 ans", label: "d'expérience en rénovation énergétique" },
-    { value: "Équipe dédiée", label: "et un suivi personnalisé de votre dossier de A à Z" }
-  ];
-
   return (
     <div className="space-y-16 py-8">
-      {/* Hero Section */}
       <section className="relative bg-navy-900 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -68,65 +84,194 @@ const MaPrimeRenov = () => {
               </div>
             </div>
 
-            {/* Simulateur */}
             <Card className="p-6 bg-white text-gray-900 animate-slide-in">
               <h2 className="text-2xl font-bold mb-6">
-                J'estime mes aides et mon devis en 2 min
+                Questionnaire MaPrimeRénov'
               </h2>
-              <div className="space-y-6">
-                <div>
-                  <p className="mb-3 font-medium">Vos travaux concernent :</p>
-                  <div className="grid grid-cols-2 gap-4">
-                    <Button
-                      variant={selectedHousing === "house" ? "default" : "outline"}
-                      className="h-24 flex-col gap-2"
-                      onClick={() => setSelectedHousing("house")}
-                    >
-                      <Home className="w-8 h-8" />
-                      Une maison
-                    </Button>
-                    <Button
-                      variant={selectedHousing === "apartment" ? "default" : "outline"}
-                      className="h-24 flex-col gap-2"
-                      onClick={() => setSelectedHousing("apartment")}
-                    >
-                      <Building2 className="w-8 h-8" />
-                      Un appartement
-                    </Button>
-                  </div>
+              <form className="space-y-6">
+                {/* 1. Type de logement */}
+                <div className="space-y-4">
+                  <Label className="text-lg font-semibold">1. Votre projet concerne :</Label>
+                  <RadioGroup className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="maison" id="maison" />
+                      <Label htmlFor="maison">Une maison</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="appartement" id="appartement" />
+                      <Label htmlFor="appartement">Un appartement</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
 
-                <div>
-                  <p className="mb-3 font-medium">Votre logement a été construit :</p>
-                  <div className="grid grid-cols-3 gap-4">
-                    <Button
-                      variant={constructionPeriod === "less2" ? "default" : "outline"}
-                      onClick={() => setConstructionPeriod("less2")}
-                    >
-                      - de 2 ans
-                    </Button>
-                    <Button
-                      variant={constructionPeriod === "2to15" ? "default" : "outline"}
-                      onClick={() => setConstructionPeriod("2to15")}
-                    >
-                      Entre 2 et 15 ans
-                    </Button>
-                    <Button
-                      variant={constructionPeriod === "more15" ? "default" : "outline"}
-                      onClick={() => setConstructionPeriod("more15")}
-                    >
-                      + de 15 ans
-                    </Button>
-                  </div>
+                {/* 2. Période de construction */}
+                <div className="space-y-4">
+                  <Label className="text-lg font-semibold">2. La construction de ce logement date de :</Label>
+                  <RadioGroup className="grid gap-2">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="moins2ans" id="moins2ans" />
+                      <Label htmlFor="moins2ans">Moins de 2 ans</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="2a15ans" id="2a15ans" />
+                      <Label htmlFor="2a15ans">Entre 2 ans et 15 ans</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="plus15ans" id="plus15ans" />
+                      <Label htmlFor="plus15ans">Plus de 15 ans</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
 
-                <Button 
-                  className="w-full text-lg py-6 animate-pulse"
-                  disabled={!selectedHousing || !constructionPeriod}
-                >
-                  Je calcule mes aides
+                {/* 3. Surface habitable */}
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold">
+                    3. Quelle est la surface habitable approximative de votre logement (en m²) ?
+                  </Label>
+                  <Input type="number" placeholder="Surface à préciser" />
+                </div>
+
+                {/* 4. Mode de chauffage */}
+                <div className="space-y-4">
+                  <Label className="text-lg font-semibold">
+                    4. Aujourd'hui, quel est le mode de chauffage principal pour ce logement ?
+                  </Label>
+                  <RadioGroup className="grid gap-2">
+                    {[
+                      "Chauffage au fioul",
+                      "Chauffage électrique",
+                      "Chauffage au gaz",
+                      "Chauffage au bois",
+                      "Pompe à chaleur",
+                      "Chauffage au charbon"
+                    ].map((type) => (
+                      <div key={type} className="flex items-center space-x-2">
+                        <RadioGroupItem value={type} id={type} />
+                        <Label htmlFor={type}>{type}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
+
+                {/* 5. Travaux prévus */}
+                <div className="space-y-4">
+                  <Label className="text-lg font-semibold">
+                    5. Quels travaux envisagez-vous de réaliser ?
+                  </Label>
+                  <RadioGroup className="grid gap-2">
+                    {[
+                      "Isolation",
+                      "Chauffage",
+                      "Ventilation",
+                      "Énergie renouvelable",
+                      "Autre"
+                    ].map((work) => (
+                      <div key={work} className="flex items-center space-x-2">
+                        <RadioGroupItem value={work} id={work} />
+                        <Label htmlFor={work}>{work}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
+
+                {/* 6. Type d'isolation */}
+                <div className="space-y-4">
+                  <Label className="text-lg font-semibold">
+                    6. Quel type d'isolation envisagez-vous ?
+                  </Label>
+                  <RadioGroup className="grid gap-2">
+                    {[
+                      "Isolation des combles",
+                      "Isolation des murs",
+                      "Isolation des fenêtres",
+                      "Isolation du sol",
+                      "Aucune"
+                    ].map((insulation) => (
+                      <div key={insulation} className="flex items-center space-x-2">
+                        <RadioGroupItem value={insulation} id={insulation} />
+                        <Label htmlFor={insulation}>{insulation}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
+
+                {/* 7. Date de début des travaux */}
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold">
+                    7. Quand prévoyez-vous de commencer les travaux ?
+                  </Label>
+                  <Input type="date" />
+                </div>
+
+                {/* 8. Code postal */}
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold">
+                    8. Quel est votre code postal ?
+                  </Label>
+                  <Input type="text" placeholder="Code postal" />
+                </div>
+
+                {/* 9. Ville */}
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold">
+                    9. Dans quelle ville se situe votre logement ?
+                  </Label>
+                  <Input type="text" placeholder="Ville" />
+                </div>
+
+                {/* 10. Statut de propriété */}
+                <div className="space-y-4">
+                  <Label className="text-lg font-semibold">
+                    10. Êtes-vous propriétaire de ce logement ?
+                  </Label>
+                  <RadioGroup className="grid gap-2">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="oui" id="proprietaire-oui" />
+                      <Label htmlFor="proprietaire-oui">Oui</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="non" id="proprietaire-non" />
+                      <Label htmlFor="proprietaire-non">Non</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+
+                {/* 11. Taille du foyer */}
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold">
+                    11. Combien de personnes vivent dans votre foyer ?
+                  </Label>
+                  <Input type="number" placeholder="Nombre de personnes" />
+                </div>
+
+                {/* 12. Revenu */}
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold">
+                    12. Quel est votre revenu annuel ?
+                  </Label>
+                  <Input type="number" placeholder="Revenu annuel" />
+                </div>
+
+                {/* 13. Téléphone */}
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold">
+                    13. Quel est votre numéro de téléphone ?
+                  </Label>
+                  <Input type="tel" placeholder="Numéro de téléphone" />
+                </div>
+
+                {/* 14. Email */}
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold">
+                    14. Quel est votre adresse email ?
+                  </Label>
+                  <Input type="email" placeholder="Adresse email" />
+                </div>
+
+                <Button className="w-full text-lg py-6">
+                  Valider mon questionnaire
                 </Button>
-              </div>
+              </form>
             </Card>
           </div>
         </div>
@@ -146,39 +291,6 @@ const MaPrimeRenov = () => {
             </div>
           ))}
         </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Pourquoi faire confiance à Rénov'&Moi ?
-          </h2>
-          <div className="grid md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div 
-                key={index}
-                className="text-center space-y-2 animate-scale-up"
-                style={{ animationDelay: `${index * 200}ms` }}
-              >
-                <div className="text-2xl font-bold text-primary">{stat.value}</div>
-                <p className="text-gray-600">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 text-center">
-        <Card className="max-w-2xl mx-auto p-8 space-y-6">
-          <h2 className="text-2xl font-bold">
-            Demandez votre devis gratuit pour votre projet de rénovation énergétique
-          </h2>
-          <Button size="lg" className="animate-pulse">
-            Je demande mon devis gratuit
-          </Button>
-        </Card>
       </section>
     </div>
   );
