@@ -26,12 +26,16 @@ import {
   Wrench,
   Shield
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 const MaPrimeRenov = () => {
   const [selectedHousing, setSelectedHousing] = useState<"house" | "apartment" | null>(null);
   const [constructionPeriod, setConstructionPeriod] = useState<"less2" | "2to15" | "more15" | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     housingType: "",
     constructionDate: "",
@@ -49,9 +53,54 @@ const MaPrimeRenov = () => {
 
   const totalSteps = 6; // 12 questions, 2 per step
 
+  const handleSubmit = async () => {
+    try {
+      setIsSubmitting(true);
+      const { error } = await supabase
+        .from('form_submissions')
+        .insert({
+          housing_type: formData.housingType,
+          construction_date: formData.constructionDate,
+          surface: formData.surface,
+          heating_type: formData.heatingType,
+          work_types: formData.workType,
+          insulation_types: formData.insulationType,
+          start_date: formData.startDate,
+          postal_code: formData.location.postalCode,
+          city: formData.location.city,
+          ownership_status: formData.ownershipStatus,
+          household_size: formData.householdSize,
+          income: formData.income,
+          phone: formData.contact.phone,
+          email: formData.contact.email
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Merci pour votre demande !",
+        description: "Nous avons bien reçu votre dossier. Vous recevrez très prochainement une estimation personnalisée du montant de vos aides MaPrimeRénov'.",
+      });
+      
+      setIsDialogOpen(false);
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        variant: "destructive",
+        title: "Erreur lors de l'envoi",
+        description: "Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleNext = () => {
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1);
+    } else {
+      handleSubmit();
     }
   };
 
@@ -377,8 +426,8 @@ const MaPrimeRenov = () => {
           >
             Précédent
           </Button>
-          <Button onClick={handleNext} disabled={currentStep === totalSteps}>
-            {currentStep === totalSteps ? "Terminer" : "Suivant"}
+          <Button onClick={handleNext} disabled={isSubmitting}>
+            {currentStep === totalSteps ? (isSubmitting ? "Envoi en cours..." : "Terminer") : "Suivant"}
           </Button>
         </div>
       </div>
