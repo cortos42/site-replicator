@@ -29,8 +29,8 @@ export const Footer = () => {
           </div>
           
           <div>
-            <h4 className="text-xl font-semibold mb-6">Contact</h4>
-            <div className="space-y-4">
+            <h4 className="text-2xl font-bold mb-6">Contact</h4>
+            <div className="space-y-4 text-gray-400">
               <div className="flex items-center gap-3">
                 <Phone size={20} className="text-primary" />
                 <span>01 23 45 67 89</span>
