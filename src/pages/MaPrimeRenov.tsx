@@ -47,10 +47,10 @@ const MaPrimeRenov = () => {
   ];
 
   const stats = [
-    { value: "4 300", label: "artisans RGE en France, avec à l'APP" },
-    { value: "+100 000", label: "familles accompagnées chaque année" },
-    { value: "16 ans", label: "d'expérience en rénovation énergétique" },
-    { value: "Équipe dédiée", label: "et un suivi personnalisé de votre dossier de A à Z" }
+    { value: "Expertise MaPrimeRénov'", label: "Une maîtrise complète du dispositif et de ses évolutions" },
+    { value: "Qualité garantie", label: "Des professionnels certifiés et qualifiés" },
+    { value: "Équipe dédiée", label: "Recommandations personnalisées pour votre logement" },
+    { value: "Gain de temps", label: "Simplification des démarches administratives" }
   ];
 
   return (
