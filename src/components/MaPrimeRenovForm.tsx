@@ -8,9 +8,9 @@ import { LocationStep } from "./form-steps/LocationStep";
 import { HouseholdStep } from "./form-steps/HouseholdStep";
 import { ContactStep } from "./form-steps/ContactStep";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
-export const MaPrimeRenovForm = () => {
+export const MaPrimeRenovForm = ({ onClose }: { onClose: () => void }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -61,6 +61,8 @@ export const MaPrimeRenovForm = () => {
         title: "Merci pour votre demande !",
         description: "Nous avons bien reçu votre dossier. Vous recevrez très prochainement une estimation personnalisée du montant de vos aides MaPrimeRénov'.",
       });
+
+      onClose();
 
     } catch (error) {
       console.error('Error submitting form:', error);
