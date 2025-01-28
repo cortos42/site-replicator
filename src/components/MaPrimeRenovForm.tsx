@@ -7,9 +7,14 @@ import { WorkTypesStep } from "./form-steps/WorkTypesStep";
 import { LocationStep } from "./form-steps/LocationStep";
 import { HouseholdStep } from "./form-steps/HouseholdStep";
 import { ContactStep } from "./form-steps/ContactStep";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 export const MaPrimeRenovForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  
   const [formData, setFormData] = useState({
     housingType: "",
     constructionDate: "",
@@ -27,9 +32,53 @@ export const MaPrimeRenovForm = () => {
 
   const totalSteps = 6;
 
+  const handleSubmit = async () => {
+    try {
+      setIsSubmitting(true);
+      
+      const { error } = await supabase
+        .from('form_submissions')
+        .insert({
+          housing_type: formData.housingType,
+          construction_date: formData.constructionDate,
+          surface: formData.surface,
+          heating_type: formData.heatingType,
+          work_types: formData.workType,
+          insulation_types: formData.insulationType,
+          start_date: formData.startDate,
+          postal_code: formData.location.postalCode,
+          city: formData.location.city,
+          ownership_status: formData.ownershipStatus,
+          household_size: formData.householdSize,
+          income: formData.income,
+          phone: formData.contact.phone,
+          email: formData.contact.email
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Formulaire envoyé avec succès !",
+        description: "Nous vous contacterons bientôt pour discuter de votre projet.",
+      });
+
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        variant: "destructive",
+        title: "Erreur lors de l'envoi",
+        description: "Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleNext = () => {
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1);
+    } else {
+      handleSubmit();
     }
   };
 
@@ -57,12 +106,15 @@ export const MaPrimeRenovForm = () => {
         <Button
           variant="outline"
           onClick={handlePrevious}
-          disabled={currentStep === 1}
+          disabled={currentStep === 1 || isSubmitting}
         >
           Précédent
         </Button>
-        <Button onClick={handleNext} disabled={currentStep === totalSteps}>
-          {currentStep === totalSteps ? "Terminer" : "Suivant"}
+        <Button 
+          onClick={handleNext} 
+          disabled={isSubmitting}
+        >
+          {currentStep === totalSteps ? (isSubmitting ? "Envoi en cours..." : "Terminer") : "Suivant"}
         </Button>
       </div>
     </div>

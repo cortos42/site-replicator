@@ -9,7 +9,63 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      form_submissions: {
+        Row: {
+          city: string
+          construction_date: string
+          created_at: string
+          email: string
+          heating_type: string
+          household_size: string
+          housing_type: string
+          id: string
+          income: string
+          insulation_types: string[]
+          ownership_status: string
+          phone: string
+          postal_code: string
+          start_date: string
+          surface: string
+          work_types: string[]
+        }
+        Insert: {
+          city: string
+          construction_date: string
+          created_at?: string
+          email: string
+          heating_type: string
+          household_size: string
+          housing_type: string
+          id?: string
+          income: string
+          insulation_types: string[]
+          ownership_status: string
+          phone: string
+          postal_code: string
+          start_date: string
+          surface: string
+          work_types: string[]
+        }
+        Update: {
+          city?: string
+          construction_date?: string
+          created_at?: string
+          email?: string
+          heating_type?: string
+          household_size?: string
+          housing_type?: string
+          id?: string
+          income?: string
+          insulation_types?: string[]
+          ownership_status?: string
+          phone?: string
+          postal_code?: string
+          start_date?: string
+          surface?: string
+          work_types?: string[]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
