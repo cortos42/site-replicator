@@ -58,8 +58,8 @@ export const MaPrimeRenovForm = () => {
       if (error) throw error;
 
       toast({
-        title: "Formulaire envoyé avec succès !",
-        description: "Nous vous contacterons bientôt pour discuter de votre projet.",
+        title: "Merci pour votre demande !",
+        description: "Nous avons bien reçu votre dossier. Vous recevrez très prochainement une estimation personnalisée du montant de vos aides MaPrimeRénov'.",
       });
 
     } catch (error) {
