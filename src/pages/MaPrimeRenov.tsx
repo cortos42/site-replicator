@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Home, Building2, Calculator, Check, Euro, Clock, Target } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+
+const MaPrimeRenov = () => {
+  const [selectedHousing, setSelectedHousing] = useState<"house" | "apartment" | null>(null);
+  const [constructionPeriod, setConstructionPeriod] = useState<"less2" | "2to15" | "more15" | null>(null);
 
   const features = [
     {
@@ -44,12 +44,9 @@ import { Label } from "@/components/ui/label";
     { value: "Équipe dédiée", label: "et un suivi personnalisé de votre dossier de A à Z" }
   ];
 
-const MaPrimeRenov = () => {
-  const [selectedHousing, setSelectedHousing] = useState<"house" | "apartment" | null>(null);
-  const [constructionPeriod, setConstructionPeriod] = useState<"less2" | "2to15" | "more15" | null>(null);
-
   return (
     <div className="space-y-16 py-8">
+      {/* Hero Section */}
       <section className="relative bg-navy-900 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -132,177 +129,6 @@ const MaPrimeRenov = () => {
               </div>
             </Card>
           </div>
-        </div>
-      </section>
-
-      {/* Questionnaire Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">
-          Questionnaire d'éligibilité
-        </h2>
-        <ScrollArea className="h-[600px] rounded-md border">
-          <div className="grid grid-cols-2 gap-6 p-6">
-            {/* Question 1 & 2 */}
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">1. Votre projet concerne :</h3>
-              <RadioGroup onValueChange={(value) => setSelectedHousing(value as "house" | "apartment")}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="house" id="house" />
-                  <Label htmlFor="house">Une maison</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="apartment" id="apartment" />
-                  <Label htmlFor="apartment">Un appartement</Label>
-                </div>
-              </RadioGroup>
-            </Card>
-
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">2. La construction de ce logement date de :</h3>
-              <RadioGroup onValueChange={(value) => setConstructionPeriod(value as "less2" | "2to15" | "more15")}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="less2" id="less2" />
-                  <Label htmlFor="less2">Moins de 2 ans</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="2to15" id="2to15" />
-                  <Label htmlFor="2to15">Entre 2 ans et 15 ans</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="more15" id="more15" />
-                  <Label htmlFor="more15">Plus de 15 ans</Label>
-                </div>
-              </RadioGroup>
-            </Card>
-
-            {/* Question 3 & 4 */}
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">3. Quelle est la surface habitable approximative de votre logement (en m²) ?</h3>
-              <Input type="number" placeholder="Surface à préciser" />
-            </Card>
-
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">4. Aujourd'hui, quel est le mode de chauffage principal pour ce logement ?</h3>
-              <RadioGroup>
-                {["Chauffage au fioul", "Chauffage électrique", "Chauffage au gaz", 
-                  "Chauffage au bois", "Pompe à chaleur", "Chauffage au charbon"].map((option) => (
-                  <div key={option} className="flex items-center space-x-2">
-                    <RadioGroupItem value={option} id={option} />
-                    <Label htmlFor={option}>{option}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </Card>
-
-            {/* Question 5 & 6 */}
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">5. Quels travaux envisagez-vous de réaliser ?</h3>
-              <RadioGroup>
-                {["Rénovation globale", "Isolation", "Chauffage", "Ventilation"].map((option) => (
-                  <div key={option} className="flex items-center space-x-2">
-                    <RadioGroupItem value={option} id={option} />
-                    <Label htmlFor={option}>{option}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </Card>
-
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">6. Quels types d'isolation souhaitez-vous effectuer ?</h3>
-              <RadioGroup>
-                {[
-                  "Isolation des combles",
-                  "Isolation des murs",
-                  "Isolation du sol",
-                  "Isolation des fenêtres, porte-fenêtres ou volets roulants",
-                  "Isolation d'une toiture terrasse"
-                ].map((option) => (
-                  <div key={option} className="flex items-center space-x-2">
-                    <RadioGroupItem value={option} id={option} />
-                    <Label htmlFor={option}>{option}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </Card>
-
-            {/* Question 7 & 8 */}
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">7. Quand souhaitez-vous démarrer vos travaux ?</h3>
-              <RadioGroup>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="6months" id="6months" />
-                  <Label htmlFor="6months">Dans les 6 prochains mois</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="later" id="later" />
-                  <Label htmlFor="later">Plus tard</Label>
-                </div>
-              </RadioGroup>
-            </Card>
-
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">8. Où se situe votre logement ?</h3>
-              <div className="space-y-4">
-                <Input type="text" placeholder="Code postal" />
-                <Input type="text" placeholder="Ville" />
-              </div>
-            </Card>
-
-            {/* Question 9 & 10 */}
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">9. Dans ce logement, vous êtes :</h3>
-              <RadioGroup>
-                {[
-                  "Propriétaire occupant",
-                  "Propriétaire d'une résidence secondaire",
-                  "Propriétaire bailleur",
-                  "Locataire"
-                ].map((option) => (
-                  <div key={option} className="flex items-center space-x-2">
-                    <RadioGroupItem value={option} id={option} />
-                    <Label htmlFor={option}>{option}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </Card>
-
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">10. Combien de personnes composent votre foyer, y compris vous-même ?</h3>
-              <Input type="number" placeholder="Nombre de personnes" />
-            </Card>
-
-            {/* Question 11 & 12 */}
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">11. Quel est le revenu fiscal annuel approximatif de votre foyer ?</h3>
-              <RadioGroup>
-                {[
-                  "Inférieur à 25 115 €",
-                  "Entre 25 115 € et 32 197 €",
-                  "Entre 32 197 € et 45 340 €",
-                  "Supérieur à 45 340 €"
-                ].map((option) => (
-                  <div key={option} className="flex items-center space-x-2">
-                    <RadioGroupItem value={option} id={option} />
-                    <Label htmlFor={option}>{option}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </Card>
-
-            <Card className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold">12. Coordonnées</h3>
-              <div className="space-y-4">
-                <Input type="tel" placeholder="Numéro de téléphone" />
-                <Input type="email" placeholder="Mail" />
-              </div>
-            </Card>
-          </div>
-        </ScrollArea>
-
-        <div className="mt-8 flex justify-center">
-          <Button size="lg" className="animate-pulse">
-            Valider mes réponses
-          </Button>
         </div>
       </section>
 
